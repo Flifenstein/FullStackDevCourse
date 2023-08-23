@@ -16,10 +16,18 @@ const App = () => {
 
   let arrayVotes = new Uint8Array(anecdotes.length);
   const [votes, setVotes] = useState(arrayVotes);
+  const [mayor, setMayor] = useState(0);
 
   const handleVotes = () => {
+    let valorMayor = 0;
     const copy = [...votes];
     copy[selected] += 1;
+    for (let i = 0; i < copy.length; i++) {
+      if (valorMayor < copy[i]) {
+        valorMayor = copy[i];
+        setMayor(i);
+      }
+    }
     return setVotes(copy);
   };
 
@@ -30,11 +38,15 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <div> has {votes[selected]} votes</div>
       <br />
         <button onClick={setAnecdote}>next anecdote</button>
         <button onClick={handleVotes}>vote</button>
+        <h2>Anecdote with most votes</h2>
+        {anecdotes[mayor]}
+        <div> has {votes[mayor]} votes</div>
       </div>
   )
 }
