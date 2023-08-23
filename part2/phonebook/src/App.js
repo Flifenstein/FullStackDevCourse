@@ -31,13 +31,13 @@ const App = () => {
     const found = persons.find(person => person.name === newName);
 
     if (found) {
-      if (window.confirm(`${newName} is already added to the phonebook, replace the old number with the new one ?`)) {
+      if (window.confirm(`${newName} is already added to the phonebook replace the old number with the new one ?`)) {
         const updatedPerson = {...found, number: newNumber};
 
         personsApi.update(found.id, updatedPerson)
         .then(response => {
           setPersons(persons.map(person => person.id === response.id ? response : person));
-          setNotification(`${response.name}'s number has been successfully updated.`);
+          setNotification(`${response.name}'s number has been successfully updated`);
           setNotificationType('success');
 
           setTimeout(() => {
@@ -46,7 +46,7 @@ const App = () => {
         })
         .catch(error => {
           setPersons(persons.filter(person => person.id !== found.id));
-          setNotification(`Information of ${found.name} has already been removed from server.`);
+          setNotification(`Information of ${found.name} has already been removed from server`);
           setNotificationType('error');
 
           setTimeout(() => {
